@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:barbershop/src/core/ui/constants.dart';
 
-sealed class barbershopTheme {
+sealed class BarbershopTheme {
   static const _defaultImputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(8),
