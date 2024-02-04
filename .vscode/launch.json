@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "BarberShop",
+            "name": "barbershop",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "BarberShop (profile mode)",
+            "name": "barbershop (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "BarberShop (release mode)",
+            "name": "barbershop (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
