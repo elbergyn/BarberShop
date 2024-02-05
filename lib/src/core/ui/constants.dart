@@ -17,3 +17,11 @@ sealed class ColorsConstants{
   static const greyLight = Color(0xFFE6E2E9);
   static const red = Color(0xFFEB1212);
 }
+
+sealed class RouteConstants{
+  static const login = '/auth/login';
+  static const registerUser = '/auth/register/user';
+  static const registerBarberShop = '/auth/register/barbershop';
+  static const homeAdm = '/home/adm';
+  static const homeEmployee = '/home/employee';
+}

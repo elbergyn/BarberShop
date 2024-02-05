@@ -18,5 +18,5 @@ samples, guidance on mobile development, and a full API reference.
 ## Project
 - Study project to manage a barbershop using Flutter, Dart, Riverpod and Dio for http requests.
 
-# start build_runner
+### start build_runner
 <code>dart run build_runner watch -d</code>

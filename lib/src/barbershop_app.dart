@@ -1,11 +1,12 @@
 import 'package:asyncstate/asyncstate.dart';
 import 'package:barbershop/src/core/ui/barbershop_nav_global_key.dart';
 import 'package:barbershop/src/core/ui/barbershop_theme.dart';
+import 'package:barbershop/src/core/ui/constants.dart';
 import 'package:barbershop/src/core/ui/widgets/barbershop_loader.dart';
 import 'package:barbershop/src/features/auth/login/login_page.dart';
-import 'package:barbershop/src/features/auth/register/user/barbershop/barbershop_register_page.dart';
-import 'package:barbershop/src/features/auth/register/user/user_register_page.dart';
-import 'package:barbershop/src/features/splash_page.dart';
+import 'package:barbershop/src/features/auth/barbershop/barbershop_register_page.dart';
+import 'package:barbershop/src/features/auth/user/user_register_page.dart';
+import 'package:barbershop/src/features/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
 class BarbershopApp extends StatelessWidget {
@@ -51,11 +52,11 @@ class BarbershopApp extends StatelessWidget {
         navigatorKey: BarbershopNavGlobalKey.instance.navKey,
         routes: {
             '/': (_) => const SplashPage(),
-            '/auth/login': (_) => const LoginPage(),
-            '/auth/register/user': (_) => const UserRegisterPage(),
-            '/auth/register/barbershop': (_) => const BarbershopRegisterPage(),
-            '/home/admin': (_) => const Text('Adm'),
-            '/home/employee': (_) => const Text('Employee'),
+            RouteConstants.login: (_) => const LoginPage(),
+            RouteConstants.registerUser: (_) => const UserRegisterPage(),
+            RouteConstants.registerBarberShop: (_) => const BarbershopRegisterPage(),
+            RouteConstants.homeAdm: (_) => const Center(child: Text('Adm')),
+            RouteConstants.homeEmployee: (_) => const Text('Employee'),
           },
       ),
     );

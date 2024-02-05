@@ -1,15 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:barbershop/src/core/ui/constants.dart';
-import 'package:barbershop/src/features/auth/login/login_page.dart';
+import 'dart:developer';
 
-class SplashPage extends StatefulWidget {
+import 'package:barbershop/src/core/ui/constants.dart';
+import 'package:barbershop/src/core/ui/helpers/messages.dart';
+import 'package:barbershop/src/features/auth/login/login_page.dart';
+import 'package:barbershop/src/features/splash/splash_vm.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   var _scale = 10.0;
   var _animationOpacityLogo = 0.0;
   
@@ -31,6 +36,26 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(splashVmProvider, (_, state) {
+      state.whenOrNull(
+        error: (error, stackTrace){
+          log('Erro ao validar o login', error: error, stackTrace: stackTrace);
+          Messages.showError('Erro ao validar o login', context);
+          Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
+        },
+        data: (data){
+          switch(data){
+            case SplashState.loggedADM:
+              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.homeAdm, (route) => false);
+            case SplashState.loggedEmployee:
+              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.homeEmployee, (route) => false);
+            case _:
+              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
+          }
+        }
+      );
+    });
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: DecoratedBox(
@@ -50,7 +75,7 @@ class _SplashPageState extends State<SplashPage> {
             onEnd: () => {
               Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
-                  settings: const RouteSettings(name: '/auth/login'),
+                  settings: const RouteSettings(name: RouteConstants.login),
                   pageBuilder: (
                     context,
                     animation,
