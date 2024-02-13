@@ -15,10 +15,10 @@ class SplashVm extends _$SplashVm {
     final sp = await SharedPreferences.getInstance();
 
     if (sp.containsKey(LocalStorageKeys.accessToken)) {
-      ref.invalidate(getMeProvider);
-      ref.invalidate(getMyBarbershopProvider);
-
       try {
+        ref.invalidate(getMeProvider);
+        ref.invalidate(getMyBarbershopProvider);
+
         final userModel = await ref.watch(getMeProvider.future);
         return switch (userModel) {
           UserModelADM() => SplashState.loggedADM,

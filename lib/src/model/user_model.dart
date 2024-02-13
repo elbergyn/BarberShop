@@ -77,8 +77,8 @@ class UserModelEmployee extends UserModel {
         'name': final String name,
         'email': final String email,
         'barbershop_id': final int barbershopId,
-        'workDays': final List workDays,
-        'workHours': final List workHours
+        'work_days': final List workDays,
+        'work_hours': final List workHours
       } =>
         UserModelEmployee(
           id: id,

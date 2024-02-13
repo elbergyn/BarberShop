@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:barbershop/src/core/fp/nil.dart';
+import 'package:barbershop/src/core/ui/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:barbershop/src/core/exceptions/auth_exception.dart';
 import 'package:barbershop/src/core/exceptions/repository_exception.dart';
@@ -79,5 +80,23 @@ class UserRepositoryImpl implements UserRepository {
         RepositoryException(message: 'Erro ao registrar o usuário admin'),
       );
     }
+  }
+  
+  @override
+  Future<Either<RepositoryException, List<UserModel>>> getEmployees(int barbershopId) async {
+    try {
+  final Response(:List data) = await restClient.auth.get(RouteConstants.users, queryParameters: {
+    'barbershop_id': barbershopId
+  });
+  
+  final employees = data.map((e) => UserModel.fromMap(e)).toList();
+  return Success(employees);
+} on DioException catch (e, s) {
+  log('Erro ao buscar colaboradores', error: e, stackTrace: s);
+  return Failure(RepositoryException(message: 'Erro ao buscar colaboradores'));
+} on ArgumentError catch(e, s){
+  log('Erro ao converter colaboradores (Invalid Json)', error: e, stackTrace: s);
+  return Failure(RepositoryException(message: 'Erro ao buscar colaboradores'));
+}
   }
 }
