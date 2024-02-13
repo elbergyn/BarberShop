@@ -9,40 +9,46 @@ sealed class BarbershopTheme {
       borderSide: BorderSide(color: ColorsConstants.grey));
 
   static ThemeData themeData = ThemeData(
-    useMaterial3: true,
-    appBarTheme: const AppBarTheme(
-      centerTitle: true,
-      iconTheme: IconThemeData(color: ColorsConstants.brow),
-      backgroundColor: Colors.white,
-      titleTextStyle: TextStyle(
-        fontWeight: FontWeight.w500,
-        fontSize: 18,
-        color: Colors.black,
-        fontFamily: FontConstants.fontFamily
-      )
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.white,
-      labelStyle: const TextStyle(color: ColorsConstants.grey),
-      border: _defaultImputBorder,
-      enabledBorder: _defaultImputBorder,
-      focusedBorder: _defaultImputBorder,
-      errorBorder: _defaultImputBorder.copyWith(
-        borderSide: const BorderSide(
-          color: ColorsConstants.red,
+      useMaterial3: true,
+      appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          iconTheme: IconThemeData(color: ColorsConstants.brow),
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              color: Colors.black,
+              fontFamily: FontConstants.fontFamily)),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: const TextStyle(color: ColorsConstants.grey),
+        border: _defaultImputBorder,
+        enabledBorder: _defaultImputBorder,
+        focusedBorder: _defaultImputBorder,
+        errorBorder: _defaultImputBorder.copyWith(
+          borderSide: const BorderSide(
+            color: ColorsConstants.red,
+          ),
         ),
       ),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ColorsConstants.brow,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ColorsConstants.brow,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       ),
-    ),
-    fontFamily: FontConstants.fontFamily
-  );
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+        side: const BorderSide(
+          color: ColorsConstants.brow,
+          width: 1,
+        ),
+        foregroundColor: ColorsConstants.brow,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      )),
+      fontFamily: FontConstants.fontFamily);
 }

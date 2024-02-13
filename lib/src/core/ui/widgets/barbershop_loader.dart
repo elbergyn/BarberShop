@@ -19,3 +19,18 @@ class BarbershopLoader extends AsyncOverlay {
           ),
         );
 }
+
+class BarbershopLoaderCustom extends StatelessWidget {
+  const BarbershopLoaderCustom({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width * .5,
+      child: LoadingAnimationWidget.threeArchedCircle(
+        color: ColorsConstants.brow,
+        size: 60,
+      ),
+    );
+  }
+}
