@@ -53,8 +53,8 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
         },
         loading: () => const BarbershopLoaderCustom(),
         data: (barbershopModel) {
-          final BarbershopModel(:openingDays,:openingHours) = barbershopModel;
-          
+          final BarbershopModel(:openingDays, :openingHours) = barbershopModel;
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -163,7 +163,13 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(56),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          employeeRegisterVm.register(
+                            name: nameEC.text,
+                            email: emailEC.text,
+                            password: passwordEC.text,
+                          );
+                        },
                         child: const Text('CADASTRAR COLABORADORA'),
                       )
                     ],
