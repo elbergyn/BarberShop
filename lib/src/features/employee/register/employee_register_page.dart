@@ -51,7 +51,7 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
               error: error, stackTrace: stackTrace);
           return const Center(child: Text('Erro ao carregar a página'));
         },
-        loading: () => const BarbershopLoaderCustom(),
+        loading: () => const BarbershopLoader(),
         data: (barbershopModel) {
           final BarbershopModel(:openingDays, :openingHours) = barbershopModel;
 

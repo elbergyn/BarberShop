@@ -42,6 +42,14 @@ class EmployeeRegisterVm extends _$EmployeeRegisterVm {
   }
 
   Future<void> register({String? name, String? email, String? password}) async {
-        
+    
+    final asyncLoaderHandler = AsyncLoaderHandler()..start();
+    //await Future.delayed(const Duration(seconds: 5));
+
+    final EmployeeRegisterState(:registerADM, :workDays, :workHours) = state;
+
+    log('$registerADM - $workDays - $workHours');
+    asyncLoaderHandler.close();
+    //loader
   }
 }

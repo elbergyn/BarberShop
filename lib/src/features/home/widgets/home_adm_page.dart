@@ -56,9 +56,7 @@ class HomeAdmPage extends ConsumerWidget {
             child: Text('Erro ao carregar página'),
           );
         },
-        loading: () {
-          return const BarbershopLoaderCustom();
-        },
+        loading: () => const BarbershopLoader(),
       ),
     );
   }
