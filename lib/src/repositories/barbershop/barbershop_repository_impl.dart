@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:barbershop/src/core/fp/nil.dart';
+import 'package:barbershop/src/core/ui/constants.dart';
 import 'package:dio/dio.dart';
 
 import 'package:barbershop/src/core/exceptions/repository_exception.dart';
@@ -21,18 +22,31 @@ class BarbershopRepositoryImpl implements BarbershopRepository {
   @override
   Future<Either<RepositoryException, BarbershopModel>> getMyBarbershop(
       UserModel userModel) async {
-    switch (userModel) {
-      case UserModelADM():
-        final Response(data: List(first: data)) = await restClient.auth.get(
-          '/barbershop',
-          queryParameters: {'user_id': '#userAuthRef'},
-        );
-        return Success(BarbershopModel.fromMap(data));
-      case UserModelEmployee():
-        final Response(:data) = await restClient.auth.get(
-          '/barbershop/${userModel.barbershopId}',
-        );
-        return Success(BarbershopModel.fromMap(data));
+    try {
+      switch (userModel) {
+        case UserModelADM():
+          final Response(data: List(first: data)) = await restClient.auth.get(
+            RouteConstants.barbershop,
+            queryParameters: {'user_id': '#userAuthRef'},
+          );
+          return Success(BarbershopModel.fromMap(data));
+        case UserModelEmployee():
+          final Response(:data) = await restClient.auth.get(
+            '/${RouteConstants.barbershop}/${userModel.barbershopId}',
+          );
+          return Success(BarbershopModel.fromMap(data));
+      }
+    } on DioException catch (e, s) {
+      log('Erro ao carregar informação de barbearia', error: e, stackTrace: s);
+      return Failure(
+        RepositoryException(
+            message: 'Erro ao carregar informação de barbearia'),
+      );
+    } on ArgumentError catch (e, s) {
+      log('Json inválido', error: e, stackTrace: s);
+      return Failure(
+        RepositoryException(message: e.message),
+      );
     }
   }
 
