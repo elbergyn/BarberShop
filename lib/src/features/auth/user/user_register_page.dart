@@ -37,7 +37,7 @@ class _UserRegisterPageState extends ConsumerState<UserRegisterPage> {
         case UserRegisterStateStatus.initial:
           break;
         case UserRegisterStateStatus.success:
-          Navigator.of(context).pushNamed(RouteConstants.registerBarberShop);
+          Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.registerBarberShop, (route) => false);
         case UserRegisterStateStatus.error:
           Messages.showError(
             'Erro ao registrar usuário administrador',
