@@ -17,7 +17,7 @@ class SplashPage extends ConsumerStatefulWidget {
 class _SplashPageState extends ConsumerState<SplashPage> {
   var _scale = 10.0;
   var _animationOpacityLogo = 0.0;
-  
+
   final int _timeAnimation = 1;
 
   double get _logoAnimationWidth => 100 * _scale;
@@ -37,23 +37,24 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   Widget build(BuildContext context) {
     ref.listen(splashVmProvider, (_, state) {
-      state.whenOrNull(
-        error: (error, stackTrace){
-          log('Erro ao validar o login', error: error, stackTrace: stackTrace);
-          Messages.showError('Erro ao validar o login', context);
-          Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
-        },
-        data: (data){
-          switch(data){
-            case SplashState.loggedADM:
-              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.homeAdm, (route) => false);
-            case SplashState.loggedEmployee:
-              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.homeEmployee, (route) => false);
-            case _:
-              Navigator.of(context).pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
-          }
+      state.whenOrNull(error: (error, stackTrace) {
+        log('Erro ao validar o login', error: error, stackTrace: stackTrace);
+        Messages.showError('Erro ao validar o login', context);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
+      }, data: (data) {
+        switch (data) {
+          case SplashState.loggedADM:
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                RouteConstants.homeAdm, (route) => false);
+          case SplashState.loggedEmployee:
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                RouteConstants.homeEmployee, (route) => false);
+          case _:
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                RouteConstants.login, (route) => false);
         }
-      );
+      });
     });
 
     return Scaffold(

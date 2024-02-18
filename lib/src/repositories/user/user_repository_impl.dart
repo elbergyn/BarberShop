@@ -145,7 +145,7 @@ class UserRepositoryImpl implements UserRepository {
       }) userModel) async {
         try {
       
-      await restClient.auth.post(RouteConstants.users, data: {
+      await restClient.auth.post(RouteConstants.RegisterEmployee, data: {
         'name': userModel.name,
         'email': userModel.email,
         'password': userModel.password,

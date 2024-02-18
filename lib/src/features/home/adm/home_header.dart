@@ -1,7 +1,6 @@
 import 'package:barbershop/src/core/providers/application_providers.dart';
 import 'package:barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:barbershop/src/core/ui/constants.dart';
-import 'package:barbershop/src/core/ui/widgets/barbershop_loader.dart';
 import 'package:barbershop/src/features/home/adm/widgets/home_adm_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
