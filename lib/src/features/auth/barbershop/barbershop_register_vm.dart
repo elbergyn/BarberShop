@@ -1,3 +1,4 @@
+import 'package:asyncstate/asyncstate.dart';
 import 'package:barbershop/src/core/fp/either.dart';
 import 'package:barbershop/src/core/providers/application_providers.dart';
 import 'package:barbershop/src/features/auth/barbershop/barbershop_register_state.dart';
@@ -43,7 +44,7 @@ class BarbershopRegisterVm extends _$BarbershopRegisterVm {
     openingDays: openingDays,
     openingHours: openingHours);
 
-    final registerResult = await repository.save(dto);
+    final registerResult = await repository.save(dto).asyncLoader();
 
     switch (registerResult) {
       case Success():

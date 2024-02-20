@@ -31,7 +31,7 @@ class BarbershopApp extends StatelessWidget {
               const BarbershopRegisterPage(),
           RouteConstants.homeAdm: (_) => const HomeAdmPage(),
           RouteConstants.homeEmployee: (_) => const Text('Home Employee'),
-          RouteConstants.RegisterEmployee: (_) => const EmployeeRegisterPage(),
+          RouteConstants.registerEmployee: (_) => const EmployeeRegisterPage(),
         },
       ),
     );

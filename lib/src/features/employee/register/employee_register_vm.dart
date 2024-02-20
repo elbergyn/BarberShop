@@ -45,6 +45,8 @@ class EmployeeRegisterVm extends _$EmployeeRegisterVm {
   }
 
   Future<void> register({String? name, String? email, String? password}) async {
+    state = state.copyWith(status: EmployeeRegisterStateStatus.initial);
+
     final asyncLoaderHandler = AsyncLoaderHandler()..start();
     final EmployeeRegisterState(:registerADM, :workDays, :workHours) = state;
     

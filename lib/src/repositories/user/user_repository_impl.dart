@@ -119,7 +119,7 @@ class UserRepositoryImpl implements UserRepository {
           return Failure(exception);
       }
 
-      await restClient.auth.put('$RouteConstants.users/$userId', data: {
+      await restClient.auth.put('${RouteConstants.users}/$userId', data: {
         'work_days': userModel.workDays,
         'work_hours': userModel.workHours
       });
@@ -145,7 +145,7 @@ class UserRepositoryImpl implements UserRepository {
       }) userModel) async {
         try {
       
-      await restClient.auth.post(RouteConstants.RegisterEmployee, data: {
+      await restClient.auth.post(RouteConstants.users, data: {
         'name': userModel.name,
         'email': userModel.email,
         'password': userModel.password,
