@@ -25,6 +25,9 @@ sealed class RouteConstants{
   static const homeAdm = '/home/adm';
   static const homeEmployee = '/home/employee';
   static const registerEmployee = '/register/employee';//tela
+  static const employeeSchedulePage = '/employee/schedule/';
   static const users = '/users';
   static const barbershop = '/barbershop';
+  static const schedulePage = '/schedule';
+  static const schedules = '/schedules';
 }

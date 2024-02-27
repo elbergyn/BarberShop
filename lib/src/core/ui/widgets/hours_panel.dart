@@ -1,21 +1,41 @@
 import 'package:barbershop/src/core/ui/constants.dart';
 import 'package:flutter/material.dart';
 
-class HoursPanel extends StatelessWidget {
+class HoursPanel extends StatefulWidget {
   final int startTime;
   final int endTime;
   final ValueChanged<int> onHoursPressed;
   final List<int>? enabledTimes;
+  final bool singleSelection;
 
-  const HoursPanel(
-      {super.key,
-      required this.startTime,
-      required this.endTime,
-      required this.onHoursPressed,
-      this.enabledTimes});
+  const HoursPanel({
+    super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.onHoursPressed,
+    this.enabledTimes,
+  }) : singleSelection = false;
+
+  const HoursPanel.singleSelection({
+    super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.onHoursPressed,
+    this.enabledTimes,
+  }) : singleSelection = true;
+
+  @override
+  State<HoursPanel> createState() => _HoursPanelState();
+}
+
+class _HoursPanelState extends State<HoursPanel> {
+  int? lastSelection;
 
   @override
   Widget build(BuildContext context) {
+    final HoursPanel(:singleSelection, :enabledTimes, :startTime, :endTime) =
+        widget;
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -37,7 +57,20 @@ class HoursPanel extends StatelessWidget {
                   label: '${i.toString().padLeft(2, '0')}:00',
                   value: i,
                   enabledTimes: enabledTimes,
-                  onPressed: onHoursPressed,
+                  timeSelected: lastSelection,
+                  singleSelection: singleSelection,
+                  onPressed: (timeSelected) {
+                    setState(() {
+                      if (singleSelection) {
+                        if (lastSelection == timeSelected) {
+                          lastSelection = null;
+                        } else {
+                          lastSelection = timeSelected;
+                        }
+                      }
+                    });
+                    widget.onHoursPressed(timeSelected);
+                  },
                 )
             ],
           )
@@ -52,13 +85,18 @@ class TimeButton extends StatefulWidget {
   final int value;
   final ValueChanged<int> onPressed;
   final List<int>? enabledTimes;
+  final bool singleSelection;
+  final int? timeSelected;
 
-  const TimeButton(
-      {super.key,
-      required this.label,
-      required this.value,
-      required this.onPressed,
-      this.enabledTimes});
+  const TimeButton({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onPressed,
+    required this.singleSelection,
+    this.enabledTimes,
+    this.timeSelected,
+  });
 
   @override
   State<TimeButton> createState() => _TimeButtonState();
@@ -69,13 +107,30 @@ class _TimeButtonState extends State<TimeButton> {
 
   @override
   Widget build(BuildContext context) {
+    final TimeButton(
+      :enabledTimes,
+      :label,
+      :value,
+      :singleSelection,
+      :timeSelected,
+      :onPressed
+    ) = widget;
+
+    if (singleSelection) {
+      if (timeSelected != null) {
+        if (timeSelected == value) {
+          selected = true;
+        } else {
+          selected = false;
+        }
+      }
+    }
+
     final textColor = selected ? Colors.white : ColorsConstants.grey;
     var buttonColor = selected ? ColorsConstants.brow : Colors.white;
     final buttonBorderColor =
         selected ? ColorsConstants.brow : ColorsConstants.grey;
 
-    final TimeButton(:enabledTimes, :label, :value, :onPressed) = widget;
-    
     final disableTime = enabledTimes != null && !enabledTimes.contains(value);
 
     if (disableTime) {
@@ -84,12 +139,14 @@ class _TimeButtonState extends State<TimeButton> {
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: disableTime ? null : () {
-        setState(() {
-          selected = !selected;
-          onPressed(value);
-        });
-      },
+      onTap: disableTime
+          ? null
+          : () {
+              setState(() {
+                selected = !selected;
+                onPressed(value);
+              });
+            },
       child: Container(
         width: 64,
         height: 36,
