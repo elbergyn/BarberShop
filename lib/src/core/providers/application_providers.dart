@@ -6,6 +6,8 @@ import 'package:barbershop/src/model/barbershop_model.dart';
 import 'package:barbershop/src/model/user_model.dart';
 import 'package:barbershop/src/repositories/barbershop/barbershop_repository.dart';
 import 'package:barbershop/src/repositories/barbershop/barbershop_repository_impl.dart';
+import 'package:barbershop/src/repositories/schedule/schedule_repository.dart';
+import 'package:barbershop/src/repositories/schedule/schedule_repository_impl.dart';
 import 'package:barbershop/src/repositories/user/user_repository.dart';
 import 'package:barbershop/src/repositories/user/user_repository_impl.dart';
 import 'package:barbershop/src/services/users_login/user_login_service.dart';
@@ -60,11 +62,15 @@ Future<BarbershopModel> getMyBarbershop(GetMyBarbershopRef ref) async {
 Future<void> logout(LogoutRef ref) async {
   final sp = await SharedPreferences.getInstance();
   sp.clear();
-  
-  ref.onDispose(() { 
+
+  ref.onDispose(() {
     ref.invalidate(getMeProvider);
     ref.invalidate(getMyBarbershopProvider);
     Navigator.of(BarbershopNavGlobalKey.instance.navKey.currentContext!)
-      .pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
+        .pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
   });
 }
+
+@riverpod
+ScheduleRepository scheduleRepository(ScheduleRepositoryRef ref) =>
+    ScheduleRepositoryImpl(restClient: ref.read(restClientProvider));
