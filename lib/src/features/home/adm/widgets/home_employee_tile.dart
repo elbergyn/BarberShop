@@ -62,6 +62,9 @@ class HomeEmployeeTile extends StatelessWidget {
                       },
                       child: const Text('AGENDAR'),
                     ),
+                    const SizedBox(
+                       width: 10,
+                    ),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 12)),
