@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:barbershop/src/core/ui/constants.dart';
 import 'package:barbershop/src/core/ui/helpers/messages.dart';
-import 'package:barbershop/src/features/auth/login/login_page.dart';
 import 'package:barbershop/src/features/splash/splash_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,10 +18,14 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   var _scale = 10.0;
   var _animationOpacityLogo = 0.0;
 
-  final int _timeAnimation = 1;
+  final int _timeAnimation = 3;
 
   double get _logoAnimationWidth => 100 * _scale;
   double get _logoAnimationHeight => 120 * _scale;
+
+  var endAnimation = false;
+
+  Timer? redirectTimer;
 
   @override
   void initState() {
@@ -34,25 +38,34 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     super.initState();
   }
 
+  void _redirect(String routeName) {
+    if (!endAnimation) {
+      redirectTimer?.cancel();
+      redirectTimer = Timer(const Duration(microseconds: 300), () {
+        _redirect(routeName);
+      });
+    } else {
+      redirectTimer?.cancel();
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(routeName, (route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(splashVmProvider, (_, state) {
       state.whenOrNull(error: (error, stackTrace) {
         log('Erro ao validar o login', error: error, stackTrace: stackTrace);
         Messages.showError('Erro ao validar o login', context);
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(RouteConstants.login, (route) => false);
+        _redirect(RouteConstants.login);
       }, data: (data) {
         switch (data) {
           case SplashState.loggedADM:
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                RouteConstants.homeAdm, (route) => false);
+            _redirect(RouteConstants.homeAdm);
           case SplashState.loggedEmployee:
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                RouteConstants.homeEmployee, (route) => false);
+            _redirect(RouteConstants.homeEmployee);
           case _:
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                RouteConstants.login, (route) => false);
+            _redirect(RouteConstants.login);
         }
       });
     });
@@ -74,7 +87,13 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             curve: Curves.easeIn,
             opacity: _animationOpacityLogo,
             onEnd: () => {
-              Navigator.of(context).pushAndRemoveUntil(
+              setState(
+                () {
+                  endAnimation = true;
+                },
+              )
+
+              /* Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
                   settings: const RouteSettings(name: RouteConstants.login),
                   pageBuilder: (
@@ -97,7 +116,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
                   },
                 ),
                 (route) => false,
-              )
+              ) */
             },
             child: AnimatedContainer(
               duration: Duration(seconds: _timeAnimation),

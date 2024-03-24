@@ -23,7 +23,8 @@ class HomeAdmPage extends ConsumerWidget {
         shape: const CircleBorder(),
         backgroundColor: ColorsConstants.brow,
         onPressed: () async {
-          await Navigator.of(context).pushNamed(RouteConstants.registerEmployee);
+          await Navigator.of(context)
+              .pushNamed(RouteConstants.registerEmployee);
           ref.invalidate(getMeProvider);
           ref.invalidate(homeAdmVmProvider);
         },
@@ -36,7 +37,13 @@ class HomeAdmPage extends ConsumerWidget {
           ),
         ),
       ),
-      body: homeState.when(
+      body: /* homeState.when(
+        error: (error, stackTrace) {
+          return const Center(
+            child: Text("Erro ao carregar página home administrador"),
+          );
+        },
+        loading: () => const BarbershopLoader(),
         data: (HomeAdmState data) {
           return CustomScrollView(
             slivers: [
@@ -52,15 +59,33 @@ class HomeAdmPage extends ConsumerWidget {
             ],
           );
         },
+      ) */
+      homeState.when(
         error: (error, stackTrace) {
           log('Erro ao carregar colaboradores',
               error: error, stackTrace: stackTrace);
           return const Center(
-            child: Text('Erro ao carregar página'),
+            child: Text('Erro ao carregar página home administrador'),
           );
         },
         loading: () => const BarbershopLoader(),
-      ),
+        data: (HomeAdmState data) {
+          return CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(
+                child: HomeHeader(),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) =>
+                        HomeEmployeeTile(employee: data.employees[index]),
+                    childCount: data.employees.length),
+              ),
+            ],
+          );
+        },
+      )
+      ,
     );
   }
 }

@@ -23,24 +23,26 @@ class HomeEmployeeTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: ColorsConstants.grey),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: switch (employee.avatar) {
-                final avatar? => NetworkImage(avatar),
-                _ => const AssetImage(ImageConstants.avatar)
-              } as ImageProvider),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: switch (employee.avatar) {
+                  final avatar? => NetworkImage(avatar),
+                  _ => const AssetImage(ImageConstants.avatar)
+                } as ImageProvider),
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,22 +60,35 @@ class HomeEmployeeTile extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 12)),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(RouteConstants.schedulePage, arguments: employee);
+                        Navigator.of(context).pushNamed(
+                            RouteConstants.schedulePage,
+                            arguments: employee);
                       },
                       child: const Text('AGENDAR'),
+                    ),
+                    const SizedBox(
+                      width: 10,
                     ),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 12)),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(RouteConstants.employeeSchedulePage, arguments: employee);
+                        Navigator.of(context).pushNamed(
+                            RouteConstants.employeeSchedulePage,
+                            arguments: employee);
                       },
                       child: const Text('VER AGENDA'),
+                    ),
+                    const SizedBox(
+                      width: 10,
                     ),
                     const Icon(
                       BarbershopIcons.penEdit,
                       size: 16,
                       color: ColorsConstants.brow,
+                    ),
+                    const SizedBox(
+                      width: 10,
                     ),
                     const Icon(
                       BarbershopIcons.trash,
@@ -83,9 +98,9 @@ class HomeEmployeeTile extends StatelessWidget {
                   ],
                 )
               ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

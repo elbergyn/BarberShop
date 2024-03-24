@@ -52,6 +52,7 @@ class BarbershopRegisterVm extends _$BarbershopRegisterVm {
         state = state.copyWith(status: BarbershopRegisterStateStatus.success);
       case Failure(): 
         state = state.copyWith(status: BarbershopRegisterStateStatus.error);
+        state = state.copyWith(status: BarbershopRegisterStateStatus.initial);
     }
   }
 }
